@@ -5,10 +5,9 @@ import { Calendar, Music, Film, Globe, DollarSign } from 'lucide-react'
 
 interface BirthYearFactsProps {
   birthYear: number
-  userName?: string
 }
 
-export default function BirthYearFacts({ birthYear, userName }: BirthYearFactsProps) {
+export default function BirthYearFacts({ birthYear }: BirthYearFactsProps) {
   // Sample data - in a real app, this would come from APIs or a database
   const getFactsForYear = (year: number) => {
     const facts = {
@@ -128,10 +127,10 @@ export default function BirthYearFacts({ birthYear, userName }: BirthYearFactsPr
     >
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-gray-800 mb-2">
-          🌍 {userName ? `${userName}'s ` : ''}Birth Year: {birthYear}
+          The World in {birthYear} 🌍
         </h3>
         <p className="text-gray-600">
-          {userName ? `${userName}, discover` : 'Discover'} what the world was like when you were born!
+          What was happening when you were born?
         </p>
       </div>
 
@@ -180,10 +179,10 @@ export default function BirthYearFacts({ birthYear, userName }: BirthYearFactsPr
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => {
-            const text = `${userName ? `${userName}'s ` : ''}Birth year facts (${birthYear}):\n• Population: ${facts.worldPopulation.toLocaleString()}\n• Gas: ${facts.gasPrice}\n• Movie ticket: ${facts.movieTicket}\n• Top song: ${facts.topSong}\n\nFind out about your birth year at AgeMath.com! 🌍`
+            const text = `The world in ${birthYear}:\n• Population: ${facts.worldPopulation.toLocaleString()}\n• Gas: ${facts.gasPrice}\n• Movie ticket: ${facts.movieTicket}\n• Top song: ${facts.topSong}\n\nFind out about your birth year at AgeMath.com! 🌍`
 
             if (navigator.share) {
-              navigator.share({ title: `${userName ? `${userName}'s ` : ''}Birth Year: ${birthYear}`, text, url: window.location.href })
+              navigator.share({ title: `The World in ${birthYear}`, text, url: window.location.href })
             } else {
               navigator.clipboard.writeText(text)
               alert('Copied birth year facts to clipboard! 📋')

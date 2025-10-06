@@ -14,9 +14,10 @@ interface ShareableAgeCardProps {
     seconds: number
   }
   birthDate: string
+  userName?: string
 }
 
-export default function ShareableAgeCard({ age, birthDate }: ShareableAgeCardProps) {
+export default function ShareableAgeCard({ age, birthDate, userName }: ShareableAgeCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
 
   const downloadCard = async () => {
@@ -52,27 +53,35 @@ export default function ShareableAgeCard({ age, birthDate }: ShareableAgeCardPro
       ctx.textAlign = 'center'
       ctx.fillText('AgeMath', 300, 160)
 
+      // Add name if provided
+      if (userName) {
+        ctx.font = 'bold 36px Arial'
+        ctx.fillStyle = '#6B7280'
+        ctx.fillText(userName, 300, 210)
+      }
+
       ctx.font = 'bold 72px Arial'
       ctx.fillStyle = '#8B5CF6'
-      ctx.fillText(age.years.toString(), 300, 280)
+      ctx.fillText(age.years.toString(), 300, userName ? 300 : 280)
 
       ctx.font = '32px Arial'
       ctx.fillStyle = '#6B7280'
-      ctx.fillText('Years Old!', 300, 320)
+      ctx.fillText('Years Old!', 300, userName ? 340 : 320)
 
       ctx.font = '24px Arial'
       ctx.fillStyle = '#374151'
-      ctx.fillText(`That's ${age.days.toLocaleString()} days of amazing life!`, 300, 420)
-      ctx.fillText(`${age.hours.toLocaleString()} hours of experiences!`, 300, 460)
-      ctx.fillText(`${age.minutes.toLocaleString()} minutes of memories!`, 300, 500)
+      const yOffset = userName ? 40 : 0
+      ctx.fillText(`That's ${age.days.toLocaleString()} days of amazing life!`, 300, 420 + yOffset)
+      ctx.fillText(`${age.hours.toLocaleString()} hours of experiences!`, 300, 460 + yOffset)
+      ctx.fillText(`${age.minutes.toLocaleString()} minutes of memories!`, 300, 500 + yOffset)
 
       ctx.font = '20px Arial'
       ctx.fillStyle = '#9CA3AF'
-      ctx.fillText('Calculate your age at AgeMath.com', 300, 600)
+      ctx.fillText('Calculate your age at AgeMath.com', 300, 600 + yOffset)
 
       // Create download link
       const link = document.createElement('a')
-      link.download = `my-age-${age.years}-years.png`
+      link.download = `${userName ? userName.replace(/\s+/g, '-').toLowerCase() : 'my'}-age-${age.years}-years.png`
       link.href = canvas.toDataURL()
       link.click()
     } catch (error) {
@@ -82,11 +91,15 @@ export default function ShareableAgeCard({ age, birthDate }: ShareableAgeCardPro
   }
 
   const shareText = () => {
-    const text = `I'm ${age.years} years old! 🎂\n\nThat's:\n• ${age.days.toLocaleString()} days of life\n• ${age.hours.toLocaleString()} hours of experiences\n• ${age.minutes.toLocaleString()} minutes of memories\n\nCalculate your age at AgeMath.com! ✨`
+    const displayName = userName || 'I'
+    const pronoun = userName ? 'is' : 'am'
+    const possessive = userName ? `${userName}'s` : 'My'
+
+    const text = `${displayName} ${pronoun} ${age.years} years old! 🎂\n\nThat's:\n• ${age.days.toLocaleString()} days of life\n• ${age.hours.toLocaleString()} hours of experiences\n• ${age.minutes.toLocaleString()} minutes of memories\n\nCalculate your age at AgeMath.com! ✨`
 
     if (navigator.share) {
       navigator.share({
-        title: 'My Age Calculation - AgeMath',
+        title: `${possessive} Age Calculation - AgeMath`,
         text: text,
         url: window.location.href
       })
@@ -106,6 +119,11 @@ export default function ShareableAgeCard({ age, birthDate }: ShareableAgeCardPro
     >
       <div className="text-center">
         <div className="mb-4">
+          {userName && (
+            <div className="text-2xl font-bold text-gray-800 mb-2">
+              🎉 {userName}'s Age Card
+            </div>
+          )}
           <div className="text-4xl font-bold text-purple-600 mb-2">{age.years}</div>
           <div className="text-lg text-gray-600">Years Amazing!</div>
         </div>
@@ -125,7 +143,7 @@ export default function ShareableAgeCard({ age, birthDate }: ShareableAgeCardPro
             whileTap={{ scale: 0.98 }}
           >
             <Share2 size={18} />
-            Share
+            Share {userName ? `${userName}'s` : 'My'} Age
           </motion.button>
 
           <motion.button
@@ -140,7 +158,7 @@ export default function ShareableAgeCard({ age, birthDate }: ShareableAgeCardPro
         </div>
 
         <div className="mt-4 text-xs text-gray-500">
-          Generated at AgeMath.com ✨
+          {userName ? `${userName}'s age calculated` : 'Generated'} at AgeMath.com ✨
         </div>
       </div>
     </motion.div>
