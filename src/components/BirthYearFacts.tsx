@@ -58,7 +58,7 @@ export default function BirthYearFacts({ birthYear, userName }: BirthYearFactsPr
     if (year > currentYear) return 'Future hits await!'
     
     const songs: { [key: number]: string } = {
-      1990: '"Nothing Compares 2 U" by Sinéad O'Connor',
+      1990: '"Nothing Compares 2 U" by Sinéad O\'Connor',
       1995: '"Waterfalls" by TLC',
       2000: '"Breathe" by Faith Hill',
       2005: '"Hollaback Girl" by Gwen Stefani',
