@@ -10,11 +10,40 @@ interface BirthYearFactsProps {
 
 export default function BirthYearFacts({ birthYear, userName }: BirthYearFactsProps) {
   // Sample data - in a real app, this would come from APIs or a database
-  const getFactsForYear = (year: number) => {
+    const getFactsForYear = (year: number) => {
+    const currentYear = new Date().getFullYear()
+    
+    // For future years, show estimates/projections
+    if (year > currentYear) {
+      return {
+        worldPopulation: Math.floor(8000000000 + (year - 2024) * 60000000), // Projected growth
+        gasPrice: '$4.50', // Future estimate
+        movieTicket: '$18.00', // Future estimate
+        topSong: 'Music of the future!',
+        topMovie: 'Movies yet to be made!',
+        majorEvent: getMajorEvent(year),
+        technology: getTechnology(year)
+      }
+    }
+    
     const facts = {
-      worldPopulation: Math.floor(3000000000 + (year - 1960) * 75000000),
-      gasPrice: year < 1970 ? '$0.36' : year < 1980 ? '$0.86' : year < 1990 ? '$1.19' : year < 2000 ? '$1.22' : year < 2010 ? '$2.79' : '$3.52',
-      movieTicket: year < 1970 ? '$1.55' : year < 1980 ? '$2.23' : year < 1990 ? '$4.23' : year < 2000 ? '$5.39' : year < 2010 ? '$7.18' : '$8.95',
+      worldPopulation: year < 1960 ? 
+        Math.floor(2500000000 + (year - 1950) * 50000000) : 
+        Math.floor(3000000000 + (year - 1960) * 75000000),
+      gasPrice: year < 1970 ? '$0.36' : 
+               year < 1980 ? '$0.86' : 
+               year < 1990 ? '$1.19' : 
+               year < 2000 ? '$1.22' : 
+               year < 2010 ? '$2.79' : 
+               year < 2020 ? '$3.52' :
+               '$3.85', // More recent pricing
+      movieTicket: year < 1970 ? '$1.55' : 
+                  year < 1980 ? '$2.23' : 
+                  year < 1990 ? '$4.23' : 
+                  year < 2000 ? '$5.39' : 
+                  year < 2010 ? '$7.18' : 
+                  year < 2020 ? '$8.95' :
+                  '$12.50', // More recent pricing
       topSong: getTopSong(year),
       topMovie: getTopMovie(year),
       majorEvent: getMajorEvent(year),
@@ -23,23 +52,43 @@ export default function BirthYearFacts({ birthYear, userName }: BirthYearFactsPr
     return facts
   }
 
-  const getTopSong = (year: number): string => {
+    const getTopSong = (year: number): string => {
+    const currentYear = new Date().getFullYear()
+    
+    if (year > currentYear) return 'Future hits await!'
+    
     const songs: { [key: number]: string } = {
-      1990: '"Nothing Compares 2 U" by Sinéad O\'Connor',
+      1990: '"Nothing Compares 2 U" by Sinéad O'Connor',
       1995: '"Waterfalls" by TLC',
       2000: '"Breathe" by Faith Hill',
       2005: '"Hollaback Girl" by Gwen Stefani',
       2010: '"Tik ToK" by Kesha',
       2015: '"Uptown Funk" by Mark Ronson ft. Bruno Mars',
-      2020: '"Blinding Lights" by The Weeknd'
+      2020: '"Blinding Lights" by The Weeknd',
+      2021: '"Levitating" by Dua Lipa',
+      2022: '"Heat Waves" by Glass Animals',
+      2023: '"Flowers" by Miley Cyrus',
+      2024: '"Espresso" by Sabrina Carpenter'
     }
 
-    // Find closest year
-    const years = Object.keys(songs).map(Number).sort((a, b) => Math.abs(year - a) - Math.abs(year - b))
-    return songs[years[0]] || `Popular music from ${year}`
+    // Find closest year that's not in the future
+    const validYears = Object.keys(songs)
+      .map(Number)
+      .filter(songYear => songYear <= year)
+      .sort((a, b) => Math.abs(year - a) - Math.abs(year - b))
+    
+    if (validYears.length > 0) {
+      return songs[validYears[0]]
+    }
+    
+    return `Popular music from ${year}`
   }
 
-  const getTopMovie = (year: number): string => {
+    const getTopMovie = (year: number): string => {
+    const currentYear = new Date().getFullYear()
+    
+    if (year > currentYear) return 'Future blockbusters!'
+    
     const movies: { [key: number]: string } = {
       1990: 'Home Alone',
       1995: 'Batman Forever',
@@ -47,14 +96,39 @@ export default function BirthYearFacts({ birthYear, userName }: BirthYearFactsPr
       2005: 'Star Wars: Episode III',
       2010: 'Toy Story 3',
       2015: 'Star Wars: The Force Awakens',
-      2020: 'Bad Boys for Life'
+      2020: 'Bad Boys for Life',
+      2021: 'Spider-Man: No Way Home',
+      2022: 'Top Gun: Maverick',
+      2023: 'Barbie',
+      2024: 'Inside Out 2'
     }
 
-    const years = Object.keys(movies).map(Number).sort((a, b) => Math.abs(year - a) - Math.abs(year - b))
-    return movies[years[0]] || `Popular movies from ${year}`
+    // Find closest year that's not in the future
+    const validYears = Object.keys(movies)
+      .map(Number)
+      .filter(movieYear => movieYear <= year)
+      .sort((a, b) => Math.abs(year - a) - Math.abs(year - b))
+    
+    if (validYears.length > 0) {
+      return movies[validYears[0]]
+    }
+    
+    return `Popular movies from ${year}`
   }
 
-  const getMajorEvent = (year: number): string => {
+    const getMajorEvent = (year: number): string => {
+    const currentYear = new Date().getFullYear()
+    
+    // For future years
+    if (year > currentYear) {
+      return 'The future awaits!'
+    }
+    
+    // For very recent years (last 2 years), be more general
+    if (year >= currentYear - 2) {
+      return 'Recent technological advances and global changes'
+    }
+    
     const events: { [key: number]: string } = {
       1969: 'Moon Landing',
       1989: 'Fall of Berlin Wall',
@@ -62,20 +136,35 @@ export default function BirthYearFacts({ birthYear, userName }: BirthYearFactsPr
       2001: 'Wikipedia launched',
       2004: 'Facebook founded',
       2007: 'iPhone released',
-      2020: 'COVID-19 pandemic began'
+      2016: 'Rise of social media influence',
+      2020: 'Global pandemic reshaped society'
     }
 
-    const years = Object.keys(events).map(Number).sort((a, b) => Math.abs(year - a) - Math.abs(year - b))
-    return events[years[0]] || `Historical events from ${year}`
+    // Only match to events that actually happened before or during the birth year
+    const validEvents = Object.keys(events)
+      .map(Number)
+      .filter(eventYear => eventYear <= year)
+      .sort((a, b) => Math.abs(year - a) - Math.abs(year - b))
+    
+    if (validEvents.length > 0) {
+      return events[validEvents[0]]
+    }
+    
+    return `Notable events around ${year}`
   }
 
-  const getTechnology = (year: number): string => {
-    if (year < 1970) return 'Color TV was becoming popular'
-    if (year < 1980) return 'Personal computers were emerging'
-    if (year < 1990) return 'Video games were revolutionizing entertainment'
-    if (year < 2000) return 'The Internet was changing the world'
-    if (year < 2010) return 'Social media was connecting everyone'
-    return 'Smartphones were transforming daily life'
+    const getTechnology = (year: number): string => {
+    const currentYear = new Date().getFullYear()
+    
+    if (year > currentYear) return 'Future technology awaits discovery!'
+    if (year >= 2020) return 'AI and machine learning are transforming everything'
+    if (year >= 2015) return 'Smartphones and social media dominated daily life'
+    if (year >= 2010) return 'Cloud computing and mobile apps were emerging'
+    if (year >= 2000) return 'The Internet was changing the world'
+    if (year >= 1990) return 'Personal computers and video games were revolutionizing entertainment'
+    if (year >= 1980) return 'Personal computers were emerging'
+    if (year >= 1970) return 'Color TV was becoming popular'
+    return 'Television and radio were the main technologies'
   }
 
   const facts = getFactsForYear(birthYear)

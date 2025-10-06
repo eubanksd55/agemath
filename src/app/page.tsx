@@ -135,7 +135,7 @@ export default function Home() {
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 placeholder="Enter your name for personalized results"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-lg"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-lg text-gray-900 placeholder:text-gray-500"
               />
               <p className="text-sm text-gray-500 mt-1">
                 💡 Adding your name personalizes all the fun facts and results!
@@ -225,7 +225,7 @@ export default function Home() {
                   <div className="text-yellow-600 font-medium">Minutes</div>
                 </div>
                 <div className="bg-gradient-to-br from-green-100 to-green-200 p-4 rounded-2xl">
-                  <div className="text-3xl font-bold text-green-600">{age.seconds.toLocaleString()}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-green-600 break-words">{age.seconds.toLocaleString()}</div>
                   <div className="text-green-600 font-medium">Seconds</div>
                 </div>
               </div>
