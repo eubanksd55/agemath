@@ -123,7 +123,7 @@ export default function AgeMilestones({ age, userName }: AgeMilestonesProps) {
         >
           <Star className="mx-auto mb-4 text-purple-500" size={48} />
           <h4 className="text-xl font-bold text-gray-800 mb-2">
-            🌟 {userName ? `${userName} is ` : "You're "}Currently {currentAge} Years Old!
+            🌟 {userName ? `${userName} is ` : "YouYou'reapos;re "}Currently {currentAge} Years Old!
           </h4>
           <p className="text-gray-600">
             That's {age.days.toLocaleString()} days, {age.hours.toLocaleString()} hours,
@@ -174,7 +174,7 @@ export default function AgeMilestones({ age, userName }: AgeMilestonesProps) {
       <div className="mt-8 text-center">
         <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-4">
           <p className="text-sm text-gray-600">
-            🎊 Fun fact: {userName ? `${userName}, you've` : "You've"} lived through{' '}
+            🎊 Fun fact: {userName ? `${userName}, youyou'veapos;ve` : "You've"} lived through{' '}
             <span className="font-bold text-purple-600">{Math.floor(currentAge / 4)}</span> leap years and{' '}
             <span className="font-bold text-pink-600">{currentAge * 12}</span> birthday months! 🎉
           </p>

@@ -7,7 +7,7 @@ import ShareableAgeCard from '@/components/ShareableAgeCard'
 import BirthYearFacts from '@/components/BirthYearFacts'
 import CelebrityAgeTwins from '@/components/CelebrityAgeTwins'
 import AgeMilestones from '@/components/AgeMilestones'
-import { differenceInYears, differenceInMonths, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, format } from 'date-fns'
+import { differenceInYears, differenceInMonths, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from 'date-fns'
 
 export default function Home() {
   const [birthDate, setBirthDate] = useState('')

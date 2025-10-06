@@ -151,7 +151,7 @@ export default function CelebrityAgeTwins({ age, userName }: CelebrityAgeTwinsPr
 
       <div className="text-center mt-6">
         <p className="text-sm text-gray-500">
-          🎭 Fun fact: {userName ? `${userName}, you're` : "You're"} in great company!
+          🎭 Fun fact: {userName ? `${userName}, you're` : "YouYou'reapos;re"} in great company!
           These celebrities are making waves just like you could be! ✨
         </p>
       </div>
